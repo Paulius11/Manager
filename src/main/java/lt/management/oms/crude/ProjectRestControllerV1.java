@@ -17,13 +17,24 @@ public class ProjectRestControllerV1 {
 	@Autowired
 	private ProjectService projectService;
 
+	private final ProjectDto projectDto;
+
+	public ProjectRestControllerV1(ProjectDto projectDto) {
+		this.projectDto = projectDto;
+	}
+
 	@GetMapping
 	public List<Project> getAllProjects() {
-		return projectService.getAll();
+
+		List<Project> pList = projectService.getAll();
+
+		return projectDto.entityToDto(pList);
 	}
 
 	@GetMapping("/{projectId}")
 	public Project getProjectById(@PathVariable Long projectId) {
+
+
 		return projectService.findById(projectId);
 	}
 
